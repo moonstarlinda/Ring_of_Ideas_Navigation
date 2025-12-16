@@ -89,6 +89,10 @@ const RingNavigation: React.FC = () => {
 
     const handleItemClick = (index: number) => {
         setActiveIndex(index);
+        const project = PROJECTS[index];
+        if (project.url) {
+            window.location.href = project.url;
+        }
     };
 
     return (

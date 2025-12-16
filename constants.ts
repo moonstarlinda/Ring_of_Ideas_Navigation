@@ -4,36 +4,40 @@ export const PROJECTS: Project[] = [
     {
         id: 1,
         title: "RING EMERGENCE",
-        subtitle: "Active",
+        subtitle: "Emerging State",
         color: "#a78bfa", // Light Purple
-        description: "The initial concept."
+        description: "The moment an idea begins to exist.",
+        url: "https://moonstarlinda.github.io/Digital_Playground/works/ring_play.html"
     },
     {
         id: 2,
         title: "DUAL ORBITS",
-        subtitle: "Version 2",
+        subtitle: "Relational Form",
         color: "#8b5cf6", // Violet
-        description: "Intertwining systems."
+        description: "Two rings, maintaining distance while moving together.",
+        url: "https://moonstarlinda.github.io/Digital_Playground/works/ring_two_orbits_v2.html"
     },
     {
         id: 3,
-        title: "SOFT THREADS",
-        subtitle: "Creative",
+        title: "DISINTEGRATION",
+        subtitle: "Conflict & Release",
         color: "#c084fc", // Purple
-        description: "Flowing particle streams."
+        description: "Breaking structure to allow release.",
+        url: "https://moonstarlinda.github.io/Digital_Playground/works/ring_release.html"
     },
     {
         id: 4,
-        title: "COMING SOON",
-        subtitle: "In Progress",
+        title: "WAVE",
+        subtitle: "Emotional Oscillation",
         color: "#7c3aed", // Deep Violet
-        description: "Future work."
+        description: "A ring moving along a composite wave, shaped by rise and fall.",
+        url: "https://moonstarlinda.github.io/Digital_Playground/works/ring_wave.html"
     },
     {
         id: 5,
-        title: "ABOUT ME",
-        subtitle: "Profile",
+        title: "TRANSFORMATION & RESTRUCTURING",
+        subtitle: "Updated Self",
         color: "#6d28d9", // Darker Violet
-        description: "Creator portfolio."
+        description: "From disruption to reorganization."
     }
 ];

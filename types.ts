@@ -4,6 +4,7 @@ export interface Project {
     subtitle: string;
     color: string;
     description?: string;
+    url?: string;
 }
 
 export interface Particle {
