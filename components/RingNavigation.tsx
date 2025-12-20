@@ -278,14 +278,14 @@ const RingNavigation: React.FC = () => {
                     onClick={() => handleItemClick(activeIndex)}
                     className="px-6 h-12 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all text-sm text-white/70 hover:text-white uppercase tracking-wider backdrop-blur-sm min-w-[120px]"
                  >
-                    Enter
+                    Explore
                  </button>
 
                  <button 
                     onClick={resetNavigation}
                     className="px-6 h-12 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all text-sm text-white/70 hover:text-white uppercase tracking-wider backdrop-blur-sm min-w-[120px]"
                  >
-                    Restart
+                    Reset
                  </button>
 
                  
