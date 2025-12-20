@@ -9,8 +9,11 @@ const RingNavigation: React.FC = () => {
     
     // Responsive state
     const [isMobile, setIsMobile] = useState(false);
-    const [radius, setRadius] = useState(200); // Default desktop radius
+    const [radius, setRadius] = useState(200);
 
+    // ✨ 新增：增加一个导航锁，防止用户狂点，也用于控制等待
+    const [isNavigating, setIsNavigating] = useState(false);
+    
     useEffect(() => {
         const handleResize = () => {
             const mobile = window.innerWidth < 768;
@@ -88,11 +91,28 @@ const RingNavigation: React.FC = () => {
     };
 
     const handleItemClick = (index: number) => {
-        setActiveIndex(index);
+        // 1. 如果正在跳转中，或者点击的是空链接，直接忽略
+        if (isNavigating) return;
+        
         const project = PROJECTS[index];
-        if (project.url) {
+        if (!project.url) return;
+
+        // 2. 立即更新状态，触发旋转动画 (让它转到 C 位)
+        setActiveIndex(index);
+
+        // 3. 如果点击的本来就是当前正中间这个，就不需要等太久，稍微等一下反馈即可
+        // 如果点击的是旁边的，需要等旋转到位
+        const isAlreadyActive = index === activeIndex;
+        const delayTime = isAlreadyActive ? 300 : 1500; // 核心：转动需要约1.5秒
+
+        // 4. 上锁，准备跳转
+        setIsNavigating(true);
+
+        // 5. 延迟执行跳转
+        setTimeout(() => {
             window.location.href = project.url;
-        }
+            // 跳转后不需要 setIsNavigating(false)，因为页面刷新了
+        }, delayTime);
     };
 
     return (
@@ -162,15 +182,18 @@ const RingNavigation: React.FC = () => {
                             >
                                 <motion.div 
                                     onClick={() => handleItemClick(index)}
-                                    className={`
-                                        relative flex flex-col items-center justify-center text-center rounded-full
-                                        cursor-pointer backdrop-blur-sm transition-all duration-500 border
-                                        ${currentSize}
+                                    className={` 
+                                        relative flex flex-col items-center justify-center text-center rounded-full 
+                                        backdrop-blur-sm transition-all duration-500 border 
+                                        ${currentSize} 
                                         ${isActive 
                                             ? 'bg-white/5 border-purple-400/30 shadow-[0_0_30px_rgba(139,92,246,0.2)] z-20' 
-                                            : 'bg-black/20 border-white/10 hover:bg-white/5 hover:border-white/20 z-10'
-                                        }
-                                    `}
+                                            : 'bg-black/20 border-white/10 hover:bg-white/5 hover:border-white/20 z-10' 
+                                        } 
+                                        
+                                        // ✨ 新增：如果正在跳转，鼠标变成等待状态 
+                                        ${isNavigating ? 'cursor-wait opacity-80' : 'cursor-pointer'} 
+                                    `} 
                                     animate={{ 
                                         rotate: -rotation,
                                         // Floating animation for "alive" feel
@@ -234,7 +257,7 @@ const RingNavigation: React.FC = () => {
             </div>
 
             {/* Bottom Controls */}
-            <div className="absolute bottom-8 md:bottom-12 flex items-center gap-4 md:gap-6 z-30">
+            <div className="absolute bottom-8 md:bottom-12 flex items-center gap-4 z-30">
                  <button 
                     onClick={prevItem}
                     className="w-12 h-12 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all text-white/70 hover:text-white backdrop-blur-sm"
@@ -252,11 +275,20 @@ const RingNavigation: React.FC = () => {
                  </button>
 
                  <button 
-                    onClick={resetNavigation}
-                    className="px-6 h-12 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all text-sm text-white/70 hover:text-white uppercase tracking-wider backdrop-blur-sm"
+                    onClick={() => handleItemClick(activeIndex)}
+                    className="px-6 h-12 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all text-sm text-white/70 hover:text-white uppercase tracking-wider backdrop-blur-sm min-w-[120px]"
                  >
-                    Reset
+                    Enter
                  </button>
+
+                 <button 
+                    onClick={resetNavigation}
+                    className="px-6 h-12 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all text-sm text-white/70 hover:text-white uppercase tracking-wider backdrop-blur-sm min-w-[120px]"
+                 >
+                    Restart
+                 </button>
+
+                 
             </div>
         </motion.div>
     );

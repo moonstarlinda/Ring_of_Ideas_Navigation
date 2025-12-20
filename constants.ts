@@ -38,6 +38,7 @@ export const PROJECTS: Project[] = [
         title: "TRANSFORMATION & RESTRUCTURING",
         subtitle: "Updated Self",
         color: "#6d28d9", // Darker Violet
-        description: "From disruption to reorganization."
+        description: "From disruption to reorganization.",
+        url: "https://moonstarlinda.github.io/Digital_Playground/works/ring_transformation.html"
     }
 ];
